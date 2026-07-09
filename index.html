@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>❤️ Sir Bravin - Love & Shine</title>
+    <style>
+        /* ── RESET & BASE ── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            min-height: 100vh;
+            overflow: hidden;
+            background: #0b0710;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+
+        /* ── CANVAS (glitter particles) ── */
+        #glitterCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ── MAIN CARD ── */
+        .love-card {
+            position: relative;
+            z-index: 10;
+            max-width: 780px;
+            width: 92%;
+            padding: 2.8rem 2.2rem 3.2rem;
+            background: rgba(11, 7, 16, 0.55);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 56px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 215, 0, 0.06) inset;
+            text-align: center;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: cardFloat 6s ease-in-out infinite;
+        }
+
+        .love-card:hover {
+            transform: scale(1.01) translateY(-4px);
+        }
+
+        @keyframes cardFloat {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* ── GLITTER TEXT (Sir Bravin) ── */
+        .glitter-title {
+            font-size: clamp(3.2rem, 15vw, 5.8rem);
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #9b59b6, #ff6b6b);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: rainbowGlide 6s ease-in-out infinite;
+            text-shadow:
+                0 0 30px rgba(255, 107, 107, 0.3),
+                0 0 60px rgba(255, 217, 61, 0.2),
+                0 0 90px rgba(107, 203, 119, 0.15);
+            position: relative;
+            display: inline-block;
+            line-height: 1.2;
+        }
+
+        /* extra sparkle overlay on text */
+        .glitter-title::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.25) 0%, transparent 60%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            animation: sparklePulse 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes rainbowGlide {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes sparklePulse {
+            0% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0.9;
+                transform: scale(1.02);
+            }
+        }
+
+        /* ── SUBTITLE ── */
+        .subtitle {
+            font-size: clamp(1rem, 2.8vw, 1.4rem);
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            margin-top: 0.4rem;
+            margin-bottom: 1.8rem;
+            text-shadow: 0 0 40px rgba(255, 200, 100, 0.15);
+            word-spacing: 0.3em;
+        }
+
+        .subtitle span {
+            display: inline-block;
+            animation: shimmerText 4s ease-in-out infinite;
+        }
+
+        @keyframes shimmerText {
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 1;
+                text-shadow: 0 0 30px rgba(255, 200, 100, 0.4);
+            }
+        }
+
+        /* ── HEART DIVIDER ── */
+        .heart-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.2rem 0 1.8rem;
+            font-size: 1.6rem;
+            color: rgba(255, 100, 130, 0.5);
+        }
+
+        .heart-divider .line {
+            flex: 1;
+            max-width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 100, 130, 0.3), transparent);
+        }
+
+        .heart-divider .heart-icon {
+            animation: heartBeat 1.8s ease-in-out infinite;
+            display: inline-block;
+            color: #ff4d6d;
+            filter: drop-shadow(0 0 20px rgba(255, 77, 109, 0.4));
+        }
+
+        @keyframes heartBeat {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            15% {
+                transform: scale(1.25);
+            }
+            30% {
+                transform: scale(1);
+            }
+            45% {
+                transform: scale(1.15);
+            }
+            60% {
+                transform: scale(1);
+            }
+        }
+
+        /* ── DESCRIPTION ── */
+        .description {
+            font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.8;
+            max-width: 520px;
+            margin: 0 auto 2.2rem;
+            font-weight: 300;
+            letter-spacing: 0.02em;
+        }
+
+        .description strong {
+            color: #ffb3c6;
+            font-weight: 600;
+        }
+
+        /* ── CTA BUTTON ── */
+        .btn-love {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2.8rem;
+            border: none;
+            border-radius: 60px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, #ff4d6d, #ff6b8a, #ff4d6d);
+            background-size: 200% 200%;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 32px rgba(255, 77, 109, 0.35);
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            animation: btnGlow 3s ease-in-out infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-love::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 60px;
+            background: linear-gradient(135deg, #ffd93d, #ff4d6d, #6bcb77, #4d96ff);
+            background-size: 300% 300%;
+            z-index: -1;
+            animation: rainbowBorder 5s ease-in-out infinite;
+            filter: blur(4px);
+            opacity: 0.6;
+        }
+
+        .btn-love:hover {
+            transform: scale(1.06) translateY(-3px);
+            box-shadow: 0 16px 48px rgba(255, 77, 109, 0.5);
+        }
+
+        .btn-love:active {
+            transform: scale(0.96);
+        }
+
+        @keyframes btnGlow {
+            0% {
+                box-shadow: 0 8px 32px rgba(255, 77, 109, 0.35);
+            }
+            100% {
+                box-shadow: 0 8px 48px rgba(255, 77, 109, 0.6), 0 0 80px rgba(255, 77, 109, 0.15);
+            }
+        }
+
+        @keyframes rainbowBorder {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .btn-love .icon-heart {
+            display: inline-block;
+            animation: heartBeat 1.8s ease-in-out infinite;
+        }
+
+        /* ── FLOATING HEARTS (CSS) ── */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: -60px;
+            font-size: 1.2rem;
+            color: rgba(255, 77, 109, 0.35);
+            animation: floatUp linear infinite;
+            filter: drop-shadow(0 0 12px rgba(255, 77, 109, 0.15));
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.6);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(720deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .love-card {
+                padding: 2rem 1.2rem 2.4rem;
+                border-radius: 32px;
+            }
+
+            .glitter-title {
+                font-size: clamp(2.6rem, 14vw, 3.8rem);
+            }
+
+            .btn-love {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .heart-divider .line {
+                max-width: 40px;
+            }
+
+            .description {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .love-card {
+                padding: 1.6rem 0.8rem 2rem;
+                border-radius: 24px;
+            }
+
+            .glitter-title {
+                font-size: 2.4rem;
+            }
+
+            .subtitle {
+                font-size: 0.8rem;
+                letter-spacing: 0.1em;
+            }
+        }
+
+        /* ── SCROLLBAR HIDE ── */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── GLITTER CANVAS ─── -->
+    <canvas id="glitterCanvas"></canvas>
+
+    <!-- ─── FLOATING HEARTS ─── -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- ─── MAIN CARD ─── -->
+    <div class="love-card">
+        <!-- Glitter Title -->
+        <h1 class="glitter-title" data-text="Sir Bravin">Sir Bravin</h1>
+
+        <!-- Subtitle -->
+        <p class="subtitle">
+            <span>✨ Sparkle &bull; Love &bull; Shine ✨</span>
+        </p>
+
+        <!-- Heart Divider -->
+        <div class="heart-divider">
+            <span class="line"></span>
+            <span class="heart-icon">❤️</span>
+            <span class="line"></span>
+        </div>
+
+        <!-- Description -->
+        <p class="description">
+            <strong>Sir Bravin</strong> brings a touch of <strong>magic</strong> and
+            <strong>love</strong> to every APK. Let your users fall in love with
+            every detail — <strong>glitter</strong>, <strong>joy</strong>, and
+            <strong>passion</strong> in every pixel.
+        </p>
+
+        <!-- CTA -->
+        <a href="#" class="btn-love" id="loveBtn">
+            <span class="icon-heart">❤️</span>
+            <span>Fall in Love Now</span>
+            <span>✨</span>
+        </a>
+    </div>
+
+    <script>
+        // ──────────────────────────────────────────────
+        //  1.  GLITTER CANVAS — particle sparkles
+        // ──────────────────────────────────────────────
+
+        const canvas = document.getElementById('glitterCanvas');
+        const ctx = canvas.getContext('2d');
+        let W, H;
+        let particles = [];
+        const PARTICLE_COUNT = 180;
+
+        function resizeCanvas() {
+            W = canvas.width = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Color palette — warm, love, rainbow
+        const palette = [
+            '#ff4d6d', '#ff6b8a', '#ff8fa3', '#ffb3c6',
+            '#ffd93d', '#ffbe0b', '#fb8500',
+            '#6bcb77', '#4d96ff', '#9b59b6',
+            '#ff6b35', '#f7c948', '#e63946',
+            '#a8e6cf', '#dcedc1', '#ffd3b6',
+        ];
+
+        class Particle {
+            constructor() {
+                this.reset(true);
+            }
+
+            reset(initial = false) {
+                this.x = Math.random() * W;
+                this.y = Math.random() * H;
+                this.size = Math.random() * 5 + 1.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5 - 0.15;
+                this.opacity = Math.random() * 0.7 + 0.3;
+                this.color = palette[Math.floor(Math.random() * palette.length)];
+                this.life = Math.random() * 200 + 100;
+                this.maxLife = this.life;
+                // twinkle
+                this.twinkleSpeed = Math.random() * 0.03 + 0.01;
+                this.twinklePhase = Math.random() * Math.PI * 2;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= 0.6;
+                this.twinklePhase += this.twinkleSpeed;
+
+                // glow pulse
+                this.currentGlow = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(this.twinklePhase));
+
+                // reset if off screen or dead
+                if (this.y < -20 || this.x < -20 || this.x > W + 20 || this.life <= 0) {
+                    this.reset();
+                    this.y = H + 20;
+                    this.x = Math.random() * W;
+                }
+            }
+
+            draw() {
+                const alpha = this.opacity * Math.min(1, this.life / 30) * (0.6 + 0.4 * this.currentGlow);
+                ctx.save();
+                ctx.globalAlpha = alpha;
+
+                // glow
+                const gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.size * 3.5
+                );
+                gradient.addColorStop(0, this.color);
+                gradient.addColorStop(0.4, this.color + '99');
+                gradient.addColorStop(1, this.color + '00');
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size * 3.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // core sparkle
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = 18;
+                ctx.fillStyle = '#fff';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size * 0.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // star shape for some
+                if (this.size > 3) {
+                    ctx.shadowBlur = 30;
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = alpha * 0.5;
+                    ctx.beginPath();
+                    for (let i = 0; i < 8; i++) {
+                        const angle = (i / 8) * Math.PI * 2 + this.twinklePhase * 0.5;
+                        const r = i % 2 === 0 ? this.size * 1.6 : this.size * 0.6;
+                        const px = this.x + Math.cos(angle) * r;
+                        const py = this.y + Math.sin(angle) * r;
+                        i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+                    }
+                    ctx.closePath();
+                    ctx.fill();
+                }
+
+                ctx.restore();
+            }
+        }
+
+        // init particles
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateGlitter() {
+            ctx.clearRect(0, 0, W, H);
+
+            // draw a very faint gradient overlay for depth
+            const grad = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, Math.max(W, H) * 0.8);
+            grad.addColorStop(0, 'rgba(20, 10, 30, 0.0)');
+            grad.addColorStop(1, 'rgba(5, 2, 10, 0.25)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, W, H);
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animateGlitter);
+        }
+
+        animateGlitter();
+
+        // ──────────────────────────────────────────────
+        //  2.  FLOATING HEARTS (DOM)
+        // ──────────────────────────────────────────────
+
+        const heartsContainer = document.getElementById('floatingHearts');
+        const heartSymbols = ['❤️', '💖', '💕', '💗', '♥️', '✨', '🌸'];
+
+        function createFloatingHeart() {
+            const el = document.createElement('span');
+            el.className = 'floating-heart';
+            el.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            el.style.left = Math.random() * 100 + '%';
+            el.style.fontSize = (Math.random() * 1.6 + 0.8) + 'rem';
+            el.style.animationDuration = (Math.random() * 14 + 12) + 's';
+            el.style.animationDelay = (Math.random() * 6) + 's';
+            el.style.opacity = Math.random() * 0.3 + 0.1;
+            heartsContainer.appendChild(el);
+
+            // remove after animation ends
+            setTimeout(() => {
+                if (el.parentNode) el.remove();
+            }, 28000);
+        }
+
+        // spawn hearts periodically
+        for (let i = 0; i < 14; i++) {
+            setTimeout(createFloatingHeart, i * 800);
+        }
+
+        setInterval(createFloatingHeart, 1200);
+
+        // ──────────────────────────────────────────────
+        //  3.  CTA BUTTON INTERACTION
+        // ──────────────────────────────────────────────
+
+        document.getElementById('loveBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // burst of extra sparkle on click
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const p = new Particle();
+                    p.x = W / 2 + (Math.random() - 0.5) * 300;
+                    p.y = H / 2 + (Math.random() - 0.5) * 200;
+                    p.size = Math.random() * 6 + 2;
+                    p.speedX = (Math.random() - 0.5) * 4;
+                    p.speedY = (Math.random() - 0.5) * 4 - 2;
+                    p.life = 80 + Math.random() * 60;
+                    p.color = palette[Math.floor(Math.random() * palette.length)];
+                    particles.push(p);
+                }, i * 30);
+            }
+
+            // also spawn a bunch of hearts
+            for (let i = 0; i < 10; i++) {
+                setTimeout(createFloatingHeart, i * 100);
+            }
+
+            // button feedback
+            const btn = this;
+            btn.style.transform = 'scale(0.92)';
+            setTimeout(() => {
+                btn.style.transform = '';
+            }, 200);
+
+            // show a little love message
+            const msgs = [
+                '💖 You are loved!',
+                '✨ Spread the sparkle!',
+                '❤️ Sir Bravin shines!',
+                '💕 Pure magic!',
+                '🌟 Glitter everywhere!'
+            ];
+            const msg = msgs[Math.floor(Math.random() * msgs.length)];
+            const originalText = btn.querySelector('span:nth-child(2)');
+            if (originalText) {
+                const old = originalText.textContent;
+                originalText.textContent = msg;
+                setTimeout(() => {
+                    originalText.textContent = old;
+                }, 1800);
+            }
+        });
+
+        // ──────────────────────────────────────────────
+        //  4.  MOUSE SPARKLE TRAIL (bonus)
+        // ──────────────────────────────────────────────
+
+        let mouseX = W / 2,
+            mouseY = H / 2;
+        let mouseActive = false;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            mouseActive = true;
+
+            // spawn tiny sparkle on move
+            if (Math.random() < 0.2) {
+                const p = new Particle();
+                p.x = mouseX + (Math.random() - 0.5) * 20;
+                p.y = mouseY + (Math.random() - 0.5) * 20;
+                p.size = Math.random() * 3 + 1;
+                p.speedX = (Math.random() - 0.5) * 1.2;
+                p.speedY = (Math.random() - 0.5) * 1.2 - 0.5;
+                p.life = 40 + Math.random() * 30;
+                p.color = palette[Math.floor(Math.random() * palette.length)];
+                p.opacity = 0.8;
+                particles.push(p);
+            }
+        });
+
+        // also on touch
+        document.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            if (touch) {
+                mouseX = touch.clientX;
+                mouseY = touch.clientY;
+                if (Math.random() < 0.25) {
+                    const p = new Particle();
+                    p.x = mouseX + (Math.random() - 0.5) * 30;
+                    p.y = mouseY + (Math.random() - 0.5) * 30;
+                    p.size = Math.random() * 4 + 1.5;
+                    p.speedX = (Math.random() - 0.5) * 1.6;
+                    p.speedY = (Math.random() - 0.5) * 1.6 - 0.8;
+                    p.life = 50 + Math.random() * 40;
+                    p.color = palette[Math.floor(Math.random() * palette.length)];
+                    p.opacity = 0.8;
+                    particles.push(p);
+                }
+            }
+        }, { passive: true });
+
+        console.log('✨ Sir Bravin — Love & Glitter loaded! ✨');
+        console.log('❤️  Spread the sparkle!  ❤️');
+    </script>
+</body>
+</html>
